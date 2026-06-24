@@ -1,0 +1,15 @@
+Anomalous hours count: 5
+Anomalous hours: 3 4 5 8 12 
+
+Highest stability sensor:
+0 with score 23
+1 with score 23
+2 with score 23
+3 with score 23
+Sensors with score >= 20: 5
+Quadrant averages:
+Q1: 36.225
+Q2: 47.05
+Q3: 23.25
+Q4: 44.0917
+Dominant quadrant: Q2
