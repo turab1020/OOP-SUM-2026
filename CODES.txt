@@ -1,0 +1,3346 @@
+#include <iostream>
+using namespace std;
+char** createJagged(char arr[][20], int n , int& rows, char identifier)
+{
+    char** jg;
+    rows = 0;
+    for (int i = 0; i<n ; i++)
+    {
+        if (arr[i][0] == identifier)
+            rows++;
+    }
+    jg = new char* [rows];
+    int ind = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (arr[i][0] == identifier)
+        {
+            int col = 0;
+            for (int j = 1; arr[i][j]!='\0'; j++)
+            {
+                if (arr[i][j] != ' ')
+                    col++;
+            }
+            jg[ind] = new char[col + 1];
+            for (int j = 1,k=0; arr[i][j] != '\0'; j++)
+            {
+                if(arr[i][j]!=' ')
+                    jg[ind][k++] = arr[i][j];
+            }
+            jg[ind][col] = '\0';
+            ind++;
+        }
+    }
+    return jg;
+}
+
+int main()
+{
+    char arr[6][20] = { "Ahello how are you?","BI am fine","Awhats up","A??","BNothing","AFine Thanks" };
+    int rows = 0;
+    char** jag = createJagged(arr, 6, rows, 'A');
+    for (int i = 0; i < rows; i++)
+    {
+        cout << jag[i] << endl;
+    }
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jun 22Jun 22
+Dry Run this code
+
+
+#include <iostream>
+using namespace std;
+int returnSizeandIndex(char arr[],int i, int& index);
+char** createJaggedArray(char arr[], int& nrows)
+{
+    char** jg;
+    nrows = 0;
+    for (int i = 0; arr[i]!='\0';i++)
+    {
+        if (arr[i] == '#')
+            nrows++;
+    }
+    jg = new char* [nrows];
+    cout << "Single pointers array created of size " << nrows << endl;
+    int col = 0, ind = 0, k = 0;
+    int nextindex = 0;
+    for (int i = 0; arr[i] != '\0'; i=k)
+    {
+        cout << "i=" << i << endl;
+        int col = 0;
+        col = returnSizeandIndex(&arr[i],i, nextindex);
+        jg[ind] = new char[col + 1];
+        cout << "Created 1D of size " << col + 1 << endl;
+        for (int l = 0; l < col; l++)
+        {
+            jg[ind][l] = arr[k];
+            cout << "Copied value " << ind << ',' << l << " = " << k << endl;
+
+            k++;
+                }
+        jg[ind][col] = '\0';
+        ind++;
+        k = nextindex;
+
+    }
+    return jg;
+}
+int returnSizeandIndex(char arr[],int k, int& index)
+{
+    int s = 0;
+    int i = 0;
+    cout <<"array[i]" << arr[i] << endl;
+    for (; arr[i]!=','; i++)
+    {
+        s++;
+    }
+    cout << "Size " << s << endl;
+    cout << "value of i" << i << endl;
+    while (arr[i] != '#')
+    {
+        i++;
+    }
+    cout << "value of i" << i << endl;
+    index = k+i + 1;
+    cout << "Next index " << index << endl;
+    return s;
+}
+int main()
+{
+    char arr[] = "Ahmad Ali,A,23#Fahad Khan,B,344#Faran,B,67#Adnan Shahid,A,67#";
+    int nrows = 0;
+    char** jag = createJaggedArray(arr, nrows);
+    for (int i = 0; i < nrows; i++)
+    {
+        cout << jag[i] << endl;
+    }
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jun 22Jun 22
+#include <iostream>
+using namespace std;
+int returnSizeandIndex(char arr[], int& index);
+char** createJaggedArray(char arr[], int& nrows)
+{
+    char** jg;
+    nrows = 0;
+    for (int i = 0; arr[i]!='\0';i++)
+    {
+        if (arr[i] == '#')
+            nrows++;
+    }
+    jg = new char* [nrows];
+    cout << "Single pointers array created of size " << nrows << endl;
+    int col = 0, ind = 0, k = 0;
+    int nextindex = 0;
+    for (int i = 0; arr[i] != '\0'; i=k)
+    {
+        cout << "i=" << i << endl;
+        int col = 0;
+        col = returnSizeandIndex(&arr[i], nextindex);
+        jg[ind] = new char[col + 1];
+        cout << "Created 1D of size " << col + 1 << endl;
+        for (int l = 0; l < col; l++)
+        {
+            jg[ind][l] = arr[k];
+            cout << "Copied value " << ind << ',' << l << " = " << k << endl;
+
+            k++;
+                }
+        jg[ind][col] = '\0';
+        ind++;
+        k = nextindex;
+
+    }
+    return jg;
+}
+int returnSizeandIndex(char arr[], int& index)
+{
+    int s = 0;
+    int i = 0;
+    cout <<"array[i]" << arr[i] << endl;
+    for (; arr[i]!=','; i++)
+    {
+        s++;
+    }
+    cout << "Size " << s << endl;
+    cout << "value of i" << i << endl;
+    while (arr[i] != '#')
+    {
+        i++;
+    }
+    cout << "value of i" << i << endl;
+    index = i + 1;
+    cout << "Next index " << index << endl;
+    return s;
+}
+int main()
+{
+    char arr[] = "Ahmad Ali,A,23#Fahad Khan,B,344#Faran,B,67#Adnan Shahid,A,67#";
+    int nrows = 0;
+    char** jag = createJaggedArray(arr, nrows);
+    for (int i = 0; i < nrows; i++)
+    {
+        cout << jag[i] << endl;
+    }
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jun 22Jun 22
+#include <iostream>
+using namespace std;
+char** createJaggedArray(char arr[], int& nrows)
+{
+    char** jg;
+    nrows = 0;
+    for (int i = 0; arr[i]!='\0'; i++)
+    {
+        if (arr[i] == '#')
+            nrows++;
+    }
+    jg = new char* [nrows];
+    cout << "Single pointers array created of size " << nrows << endl;
+    int col = 0, ind = 0, k = 0;
+    for (int i = 0; arr[i] != '\0'; i++)
+    {
+        //cout << arr[i] << endl;
+        if (arr[i] != '#')
+            col++;
+        else
+        {
+            cout << "creating one D of size " << col + 1 << endl;
+            jg[ind] = new char[col + 1] {0};
+            for (int j = 0; j < col; j++)
+            {
+                cout << "Copying data " << ind << "," << j << " = " << k << endl;
+                jg[ind][j] = arr[k];
+                k++;
+            }
+            cout << ind << "," << col << " placing \\0" << endl;
+            //jg[ind][col] = '\0';
+            col = 0;
+            ind++;
+            if (arr[k] != '\0')
+                k++;
+        }
+
+    }
+    return jg;
+}
+int main()
+{
+    char arr[] = "hello how are you?#I am fine#what up#nothing#good work#";
+    int nrows = 0;
+    char** jag = createJaggedArray(arr, nrows);
+    for (int i = 0; i < nrows; i++)
+    {
+        cout << jag[i] << endl;
+    }
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jun 22Jun 22
+#include <iostream>
+using namespace std;
+char** createJaggedArray(char arr[], int& nrows)
+{
+    char** jg;
+    nrows = 0;
+    for (int i = 0; arr[i]!='\0'; i++)
+    {
+        if (arr[i] == '#')
+            nrows++;
+    }
+    jg = new char* [nrows];
+    cout << "Single pointers array created of size " << nrows << endl;
+    int col = 0, ind = 0, k = 0;
+    for (int i = 0; arr[i] != '\0'; i++)
+    {
+        //cout << arr[i] << endl;
+        if (arr[i] != '#')
+            col++;
+        else
+        {
+            cout << "creating one D of size " << col + 1 << endl;
+            jg[ind] = new char[col + 1];
+            for (int j = 0; j < col; j++)
+            {
+                cout << "Copying data " << ind << "," << j << " = " << k << endl;
+                jg[ind][j] = arr[k];
+                k++;
+            }
+            cout << ind << "," << col << " placing \\0" << endl;
+            jg[ind][col] = '\0';
+            col = 0;
+            ind++;
+            if (arr[k] != '\0')
+                k++;
+        }
+
+    }
+    return jg;
+}
+int main()
+{
+    char arr[] = "hello how are you?#I am fine#what up#nothing#good work#";
+    int nrows = 0;
+    char** jag = createJaggedArray(arr, nrows);
+    for (int i = 0; i < nrows; i++)
+    {
+        cout << jag[i] << endl;
+    }
+}
+
+#include <iostream>
+using namespace std;
+class Point {
+public:
+    int *x;
+    int y;
+    Point(int x=0, int y=0)
+    {
+        cout << "const called " << x << " " << y << endl;
+        (this->x) =new int;
+        *(this->x) = x;
+        this->y = y;
+    }
+    Point(Point& p) {
+        cout << "my deep copy const" << endl;
+        this->x = new int(*p.x);
+        y = p.y;
+    }
+    void print()
+    {
+        cout << *x << " " << y << endl;
+       
+    }
+    ~Point()
+    {
+        cout << "Deleting " << *x << " " << y << endl;
+        delete x;
+        x = nullptr;
+    }
+};
+int main()
+{
+    Point** p = new Point * [5];
+    for (int i = 0; i < 5; i++)
+    {
+        p[i] = new Point(i, i * 10);
+    }
+    for (int i = 0; i < 5; i++)
+    {
+        (*p[i]).print();
+        p[i]->print();
+    }
+    for (int i = 0; i < 5; i++)
+    {
+        delete p[i];
+    }
+    delete[]p;
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jun 29Jun 29
+#include <iostream>
+using namespace std;
+class Point {
+public:
+    int *x;
+    int y;
+    Point(int x, int y=0)
+    {
+        cout << "const called " << x << " " << y << endl;
+        (this->x) =new int;
+        *(this->x) = x;
+        this->y = y;
+    }
+    Point(Point& p) {
+        cout << "my deep copy const" << endl;
+        this->x = new int(*p.x);
+        y = p.y;
+    }
+    void print()
+    {
+        cout << *x << " " << y << endl;
+       
+    }
+    ~Point()
+    {
+        cout << "Deleting " << *x << " " << y << endl;
+        delete x;
+        x = nullptr;
+    }
+};
+int main()
+{
+    Point list[5]{ {1,10},{2,20},{3,30},{4,40},{5,50} };
+    /*for (int i = 0; i < 5; i++)
+    {
+        *(list[i].x) = i;
+        list[i].y = i * 10;
+    }*/
+    for (int i = 0; i < 5; i++)
+    {
+        list[i].print();
+    }
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jun 29Jun 29
+#include <iostream>
+using namespace std;
+class Point {
+public:
+    int *x;
+    int y;
+    Point(int x, int y=0)
+    {
+        cout << "const called " << x << " " << y << endl;
+        (this->x) =new int;
+        *(this->x) = x;
+        this->y = y;
+    }
+    Point(Point& p) {
+        cout << "my deep copy const" << endl;
+        this->x = new int(*p.x);
+        y = p.y;
+    }
+    void print()
+    {
+        cout << *x << " " << y << endl;
+       
+    }
+    ~Point()
+    {
+        cout << "Deleting " << *x << " " << y << endl;
+        delete x;
+        x = nullptr;
+    }
+};
+int main()
+{
+    Point list[5]{ 1,2,3,4,5 };
+    /*for (int i = 0; i < 5; i++)
+    {
+        *(list[i].x) = i;
+        list[i].y = i * 10;
+    }*/
+    for (int i = 0; i < 5; i++)
+    {
+        list[i].print();
+    }
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jun 29Jun 29
+#include <iostream>
+using namespace std;
+class Point {
+public:
+    int *x;
+    int y;
+    Point(int x=0, int y=0)
+    {
+        cout << "const called " << x << " " << y << endl;
+        (this->x) =new int;
+        *(this->x) = x;
+        this->y = y;
+    }
+    Point(Point& p) {
+        cout << "my deep copy const" << endl;
+        this->x = new int(*p.x);
+        y = p.y;
+    }
+    void print()
+    {
+        cout << *x << " " << y << endl;
+       
+    }
+    ~Point()
+    {
+        cout << "Deleting " << *x << " " << y << endl;
+        delete x;
+        x = nullptr;
+    }
+};
+int main()
+{
+    Point list[5];
+    for (int i = 0; i < 5; i++)
+    {
+        *(list[i].x) = i;
+        list[i].y = i * 10;
+    }
+    for (int i = 0; i < 5; i++)
+    {
+        list[i].print();
+    }
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jun 29Jun 29
+#include <iostream>
+using namespace std;
+class Point {
+public:
+    int *x;
+    int y;
+    Point(int x, int y)
+    {
+        cout << "const called " << x << " " << y << endl;
+        (this->x) =new int;
+        *(this->x) = x;
+        this->y = y;
+    }
+    Point(Point& p) {
+        cout << "my deep copy const" << endl;
+        this->x = new int(*p.x);
+        y = p.y;
+    }
+    void print()
+    {
+        cout << *x << " " << y << endl;
+       
+    }
+    ~Point()
+    {
+        cout << "Deleting " << *x << " " << y << endl;
+        delete x;
+        x = nullptr;
+    }
+};
+int main()
+{
+    Point p1(2, 3), p2(4, 5);
+    int i = 1;
+    while(i<=3)
+    {
+        Point *p=new Point(i, i * 10);
+        i++;
+        delete p;//destructor call
+        cout << "inside loop" << endl;
+    }
+    cout << "Outside loop" << endl;
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jun 29Jun 29
+#include <iostream>
+using namespace std;
+class Point {
+public:
+    int *x;
+    int y;
+    Point(int x, int y)
+    {
+        cout << "const called " << x << " " << y << endl;
+        (this->x) =new int;
+        *(this->x) = x;
+        this->y = y;
+    }
+    Point(Point& p) {
+        cout << "my deep copy const" << endl;
+        this->x = new int(*p.x);
+        y = p.y;
+    }
+    void print()
+    {
+        cout << *x << " " << y << endl;
+       
+    }
+    ~Point()
+    {
+        cout << "Deleting " << *x << " " << y << endl;
+        delete x;
+        x = nullptr;
+    }
+};
+int main()
+{
+    Point p1(2, 3), p2(4, 5);
+    int i = 1;
+    {
+        Point p(i, i * 10);
+        i++;
+        cout << "inside loop" << endl;
+    }
+    cout << "Outside loop" << endl;
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jun 29Jun 29
+#include <iostream>
+using namespace std;
+class Point {
+public:
+    int *x;
+    int y;
+    Point(int x, int y)
+    {
+        cout << "const called " << x << " " << y << endl;
+        (this->x) =new int;
+        *(this->x) = x;
+        this->y = y;
+    }
+    Point(Point& p) {
+        cout << "my deep copy const" << endl;
+        this->x = new int(*p.x);
+        y = p.y;
+    }
+    void print()
+    {
+        cout << *x << " " << y << endl;
+       
+    }
+    ~Point()
+    {
+        cout << "Deleting " << *x << " " << y << endl;
+        delete x;
+        x = nullptr;
+    }
+};
+int main()
+{
+    Point p1(2, 3), p2(4, 5);
+    int i = 1;
+    while (i <= 3)
+    {
+        Point p(i, i * 10);
+        i++;
+        cout << "inside loop" << endl;
+    }
+    cout << "Outside loop" << endl;
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jun 29Jun 29
+#include <iostream>
+using namespace std;
+class Point {
+public:
+    int *x;
+    int y;
+    Point(int x, int y)
+    {
+        cout << "const called " << x << " " << y << endl;
+        (this->x) =new int;
+        *(this->x) = x;
+        this->y = y;
+    }
+    Point(Point& p) {
+        cout << "my deep copy const" << endl;
+        this->x = new int(*p.x);
+        y = p.y;
+    }
+    void print()
+    {
+        cout << *x << " " << y << endl;
+       
+    }
+    ~Point()
+    {
+        cout << "Deleting " << *x << " " << y << endl;
+        delete x;
+        x = nullptr;
+    }
+};
+int main()
+{
+    Point p(1,1), p1(2, 3);
+    Point p2 = p1;
+    *(p2.x) = 100;
+    p1.print();
+    p2.print();
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jun 29Jun 29
+#include <iostream>
+using namespace std;
+class Point {
+public:
+    int *x;
+    int y;
+    Point(int x, int y)
+    {
+        cout << "const called " << x << " " << y << endl;
+        (this->x) =new int;
+        *(this->x) = x;
+        this->y = y;
+    }
+    Point(Point& p) {
+        cout << "my deep copy const" << endl;
+        this->x = new int(*p.x);
+        y = p.y;
+    }
+    void print()
+    {
+        cout << *x << " " << y << endl;
+        delete x;
+    }
+};
+int main()
+{
+    Point p1(2, 3);
+    Point p2 = p1;
+    p1.print();
+    p2.print();
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jun 29Jun 29
+#include <iostream>
+using namespace std;
+class Point {
+public:
+    int *x;
+    int y;
+    Point(int x, int y)
+    {
+        cout << "const called " << x << " " << y << endl;
+        (this->x) =new int;
+        *(this->x) = x;
+        this->y = y;
+    }
+    Point(Point& p) {
+        cout << "my copy const" << endl;
+        this->x = p.x;
+        y = p.y;
+    }
+    void print()
+    {
+        cout << *x << " " << y << endl;
+        delete x;
+    }
+};
+int main()
+{
+    Point p1(2, 3);
+    Point p2 = p1;
+    p1.print();
+    p2.print();
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jun 29Jun 29
+//ambiguous call 
+
+#include <iostream>
+using namespace std;
+class Student {
+    int rollno;
+    string name;
+    float cgpa;
+    float calculate(float marks)//utility
+    {
+        return marks / 300 * 100;
+    }
+public:
+    Student() {//default
+        cout << "object created const called" << endl;
+        name = "xyz";
+        rollno = 0;
+    }
+    Student(int rollno=0) {//para
+        cout << "object created para 1 const called" << endl;
+        name = "xyz";
+        this->rollno = rollno;
+    }
+    void setRollNo(int rollno)//setter (mutator)
+    {
+        this->rollno = rollno;
+    }
+    int getRollNo()//getter (Accessor)
+    {
+        return this->rollno;
+    }
+    void setData(int rollno, string n, float cgpa);
+   
+    void printData()
+    {
+        cout << calculate(250) << endl;
+        cout << name << rollno << cgpa << endl;
+    }
+};
+void Student::setData(int rollno, string n, float cgpa)
+{
+    cout << "this " << this << endl;
+    (*this).rollno = rollno;//datamember=local variable
+    name = n;
+    this->cgpa = cgpa;
+}
+int main()
+{
+    Student s1,s2(4);
+    cout << "Address s1 " << &s1 << endl;
+    s1.setData(12, "Ali", 3.88);
+    s1.printData();
+    cout << "Address s2 " << &s2 << endl;
+    s2.setData(13, "Ahmad", 3.98);
+    s2.printData();
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jun 29Jun 29
+#include <iostream>
+using namespace std;
+class Student {
+    int rollno;
+    string name;
+    float cgpa;
+    float calculate(float marks)//utility
+    {
+        return marks / 300 * 100;
+    }
+public:
+    Student() {//default
+        cout << "object created const called" << endl;
+        name = "xyz";
+        rollno = 0;
+    }
+    void setRollNo(int rollno)//setter (mutator)
+    {
+        this->rollno = rollno;
+    }
+    int getRollNo()//getter (Accessor)
+    {
+        return this->rollno;
+    }
+    void setData(int rollno, string n, float cgpa);
+   
+    void printData()
+    {
+        cout << calculate(250) << endl;
+        cout << name << rollno << cgpa << endl;
+    }
+};
+void Student::setData(int rollno, string n, float cgpa)
+{
+    cout << "this " << this << endl;
+    (*this).rollno = rollno;//datamember=local variable
+    name = n;
+    this->cgpa = cgpa;
+}
+int main()
+{
+    Student s1,s2;
+    cout << "Address s1 " << &s1 << endl;
+    s1.setData(12, "Ali", 3.88);
+    s1.printData();
+    cout << "Address s2 " << &s2 << endl;
+    s2.setData(13, "Ahmad", 3.98);
+    s2.printData();
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jun 29Jun 29
+#include <iostream>
+using namespace std;
+class Student {
+    int rollno;
+    string name;
+    float cgpa;
+public:
+    void setRollNo(int rollno)//setter (mutator)
+    {
+        this->rollno = rollno;
+    }
+    int getRollNo()//getter (Accessor)
+    {
+        return this->rollno;
+    }
+    void setData(int rollno, string n, float cgpa);
+   
+    void printData()
+    {
+        cout << name << rollno << cgpa << endl;
+    }
+};
+void Student::setData(int rollno, string n, float cgpa)
+{
+    cout << "this " << this << endl;
+    (*this).rollno = rollno;//datamember=local variable
+    name = n;
+    this->cgpa = cgpa;
+}
+int main()
+{
+    Student s1,s2;
+    cout << "Address s1 " << &s1 << endl;
+    s1.setData(12, "Ali", 3.88);
+    s1.printData();
+    cout << "Address s2 " << &s2 << endl;
+    s2.setData(13, "Ahmad", 3.98);
+    s2.printData();
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jun 29Jun 29
+#include <iostream>
+using namespace std;
+class Student {
+    int rollno;
+    string name;
+    float cgpa;
+public:
+    void setRollNo(int rollno)//setter (mutator)
+    {
+        this->rollno = rollno;
+    }
+    int getRollNo()//getter (Accessor)
+    {
+        return this->rollno;
+    }
+    void setData(int rollno, string n, float cgpa)
+    {
+        cout << "this " << this << endl;
+        (*this).rollno = rollno;//datamember=local variable
+        name = n;
+        this->cgpa = cgpa;
+    }
+    void printData()
+    {
+        cout << name << rollno << cgpa << endl;
+    }
+};
+int main()
+{
+    Student s1,s2;
+    cout << "Address s1 " << &s1 << endl;
+    s1.setData(12, "Ali", 3.88);
+    s1.printData();
+    cout << "Address s2 " << &s2 << endl;
+    s2.setData(13, "Ahmad", 3.98);
+    s2.printData();
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jun 29Jun 29
+#include <iostream>
+using namespace std;
+class Student {
+    int rollno;
+    string name;
+    float cgpa;
+public:
+    void setData(int rollno, string n, float cgpa)
+    {
+        cout << "this " << this << endl;
+        (*this).rollno = rollno;//datamember=local variable
+        name = n;
+        this->cgpa = cgpa;
+    }
+    void printData()
+    {
+        cout << name << rollno << cgpa << endl;
+    }
+};
+int main()
+{
+    Student s1,s2;
+    cout << "Address s1 " << &s1 << endl;
+    s1.setData(12, "Ali", 3.88);
+    s1.printData();
+    cout << "Address s2 " << &s2 << endl;
+    s2.setData(13, "Ahmad", 3.98);
+    s2.printData();
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jun 29Jun 29
+#include <iostream>
+using namespace std;
+class Student {
+    int rollno;
+    string name;
+    float cgpa;
+public:
+    void setData(int r, string n, float c)
+    {
+        cout << "this " << this << endl;
+        rollno = r;
+        name = n;
+        cgpa = c;
+    }
+    void printData()
+    {
+        cout << name << rollno << cgpa << endl;
+    }
+};
+int main()
+{
+    Student s1,s2;
+    cout << "Address s1 " << &s1 << endl;
+    s1.setData(12, "Ali", 3.88);
+    s1.printData();
+    cout << "Address s2 " << &s2 << endl;
+    s2.setData(13, "Ahmad", 3.98);
+    s2.printData();
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jun 29Jun 29
+#include <iostream>
+using namespace std;
+class Student {
+    int rollno;
+    string name;
+    float cgpa;
+public:
+    void setData(int r, string n, float c)
+    {
+        rollno = r;
+        name = n;
+        cgpa = c;
+    }
+    void printData()
+    {
+        cout << name << rollno << cgpa << endl;
+    }
+};
+int main()
+{
+    Student s1,s2;
+    s1.setData(12, "Ali", 3.88);
+    s1.printData();
+    s2.setData(13, "Ahmad", 3.98);
+    s2.printData();
+   
+}
+
+#include <iostream>
+using namespace std;
+class Point {
+    int x;
+    int y;
+public:
+    Point(int x, int y)
+    {
+        cout << "const called" << endl;
+        this->x = x;
+        this->y = y;
+    }
+    void print()
+    {
+        cout << " "<<x << " " << y << endl;
+    }
+    Point& operator++()//pre
+    {
+        cout << "pre" << endl;
+        this->x++;
+        y++;
+        return *this;
+    }
+    Point& operator++(int)//post
+    {
+        Point temp (*this);
+        cout << "post" << endl;
+        this->x++;
+        y++;
+        return temp;
+    }
+    ~Point() {
+        cout << "Destrutor of " << x << " " << y << endl;
+    }
+};
+int main()
+{
+    system("CLS");
+    Point p1(1, 1);
+    Point p2 = p1++;
+    p1.print();
+    p2.print();
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 1Jul 1
+#include <iostream>
+using namespace std;
+class Point {
+    int x;
+    int y;
+public:
+    Point(int x, int y)
+    {
+        cout << "const called" << endl;
+        this->x = x;
+        this->y = y;
+    }
+    void print()
+    {
+        cout << " "<<x << " " << y << endl;
+    }
+    Point& operator++()//pre
+    {
+        cout << "pre" << endl;
+        this->x++;
+        y++;
+        return *this;
+    }
+    void operator++(int)//post
+    {
+        cout << "post" << endl;
+        this->x++;
+        y++;
+    }
+    ~Point() {
+        cout << "Destrutor of " << x << " " << y << endl;
+    }
+};
+int main()
+{
+    system("CLS");
+    Point p1(1, 1);
+    Point p2 = ++p1;
+    p1.print();
+    p2.print();
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 1Jul 1
+#include <iostream>
+using namespace std;
+class Point {
+    int x;
+    int y;
+public:
+    Point(int x, int y)
+    {
+        cout << "const called" << endl;
+        this->x = x;
+        this->y = y;
+    }
+    void print()
+    {
+        cout << " "<<x << " " << y << endl;
+    }
+    void operator++()//pre
+    {
+        cout << "pre" << endl;
+        this->x++;
+        y++;
+    }
+    void operator++(int)//post
+    {
+        cout << "post" << endl;
+        this->x++;
+        y++;
+    }
+    ~Point() {
+        cout << "Destrutor of " << x << " " << y << endl;
+    }
+};
+int main()
+{
+    system("CLS");
+    Point p1(1, 1);
+    ++p1;
+    p1.print();
+    p1++;
+    p1.print();
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 1Jul 1
+#include <iostream>
+using namespace std;
+class Point {
+    int x;
+    int y;
+public:
+    Point(int x, int y)
+    {
+        cout << "const called" << endl;
+        this->x = x;
+        this->y = y;
+    }
+    void print()
+    {
+        cout << " "<<x << " " << y << endl;
+    }
+    void operator++()
+    {
+        this->x++;
+        y++;
+    }
+    ~Point() {
+        cout << "Destrutor of " << x << " " << y << endl;
+    }
+};
+int main()
+{
+    system("CLS");
+    Point p1(1, 1);
+    ++p1;
+    p1.print();
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 1Jul 1
+#include <iostream>
+using namespace std;
+class Point {
+    int x;
+    int y;
+   
+public:
+    static int count;
+    Point(int x, int y)
+    {
+        cout << "const called" << endl;
+        this->x = x;
+        this->y = y;
+        count++;
+    }
+    void print()
+    {
+        cout << " "<<x << " " << y << endl;
+       
+    }
+    static void myStaticFun()
+    {
+        cout << "Its static" << endl;
+        cout << "count= " << count << endl;
+       
+    }
+    ~Point() {
+        cout << "Destrutor of " << x << " " << y << endl;
+    }
+};
+int Point::count = 0;
+int main()
+{
+    system("CLS");
+    Point::count = 10;
+    Point::myStaticFun();
+    Point p1(1, 1), p2(2, 2), p3(3, 3);
+    cout << Point::count << endl;
+    p1.myStaticFun();
+    p3.count = 30;
+    cout << p2.count << endl;
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 1Jul 1
+#include <iostream>
+using namespace std;
+class Point {
+    int x;
+    int y;
+   
+public:
+    static int count;
+    Point(int x, int y)
+    {
+        cout << "const called" << endl;
+        this->x = x;
+        this->y = y;
+        count++;
+    }
+    void print()
+    {
+        cout << " "<<x << " " << y << endl;
+        myStaticFun();//can access or call
+    }
+    static void myStaticFun()
+    {
+        cout << "Its static" << endl;
+        cout << "count= " << count << endl;
+        print();//cant call non static
+        x = 45;//cant access non static
+    }
+    ~Point() {
+        cout << "Destrutor of " << x << " " << y << endl;
+    }
+};
+int Point::count = 0;
+int main()
+{
+    system("CLS");
+    Point::count = 10;
+    cout << Point::count << endl;
+    Point p1(1, 1), p2(2, 2), p3(3, 3);
+    cout << Point::count << endl;
+    cout << p1.count << endl;
+    p3.count = 30;
+    cout << p2.count << endl;
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 1Jul 1
+#include <iostream>
+using namespace std;
+class Point {
+    int x;
+    int y;
+   
+public:
+    static int count;
+    Point(int x, int y)
+    {
+        cout << "const called" << endl;
+        this->x = x;
+        this->y = y;
+        count++;
+    }
+    static void print()
+    {
+        cout << " "<<x << " " << y << endl;//cant access non static
+    }
+    ~Point() {
+        cout << "Destrutor of " << x << " " << y << endl;
+    }
+};
+int Point::count = 0;
+int main()
+{
+    system("CLS");
+    Point::count = 10;
+    cout << Point::count << endl;
+    Point p1(1, 1), p2(2, 2), p3(3, 3);
+    cout << Point::count << endl;
+    cout << p1.count << endl;
+    p3.count = 30;
+    cout << p2.count << endl;
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 1Jul 1
+#include <iostream>
+using namespace std;
+class Point {
+    int x;
+    int y;
+   
+public:
+    static int count;
+    Point(int x, int y)
+    {
+        cout << "const called" << endl;
+        this->x = x;
+        this->y = y;
+        count++;
+    }
+    void print()
+    {
+        cout << " "<<x << " " << y << endl;
+    }
+    ~Point() {
+        cout << "Destrutor of " << x << " " << y << endl;
+    }
+};
+int Point::count = 0;
+int main()
+{
+    system("CLS");
+    Point::count = 10;
+    cout << Point::count << endl;
+    Point p1(1, 1), p2(2, 2), p3(3, 3);
+    cout << Point::count << endl;
+    cout << p1.count << endl;
+    p3.count = 30;
+    cout << p2.count << endl;
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 1Jul 1
+#include <iostream>
+using namespace std;
+class Point {
+    int x;
+    int y;
+   
+public:
+    static int count;
+    Point(int x, int y)
+    {
+        cout << "const called" << endl;
+        this->x = x;
+        this->y = y;
+    }
+    void print()
+    {
+        cout << " "<<x << " " << y << endl;
+    }
+    ~Point() {
+        cout << "Destrutor of " << x << " " << y << endl;
+    }
+};
+int Point::count = 0;
+int main()
+{
+    system("CLS");
+    Point::count = 10;
+    cout << Point::count << endl;
+     
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 1Jul 1
+#include <iostream>
+using namespace std;
+class Point {
+    int x;
+    int y;
+public:
+    Point(int x, int y)
+    {
+        cout << "const called" << endl;
+        this->x = x;
+        this->y = y;
+    }
+    Point& setX(int a)
+    {
+        cout << "Calling setX " <<this<< endl;
+        this->x = a;
+        return *this;
+    }
+    Point& setY(int a)
+    {
+        cout << "Calling setY "<<this << endl;
+        y = a;
+        return *this;
+    }
+    void print()
+    {
+        cout <<this<< " "<<x << " " << y << endl;
+    }
+    ~Point() {
+        cout << "Destrutor of " << x << " " << y << endl;
+    }
+};
+int main()
+{
+    system("CLS");
+    Point p1(0, 0);
+    cout << &p1 << endl;
+    p1.setX(2).setY(3).print();
+    p1.print();
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 1Jul 1
+#include <iostream>
+using namespace std;
+class Point {
+    int x;
+    int y;
+public:
+    Point(int x, int y)
+    {
+        cout << "const called" << endl;
+        this->x = x;
+        this->y = y;
+    }
+    Point setX(int a)
+    {
+        cout << "Calling setX " <<this<< endl;
+        this->x = a;
+        return *this;
+    }
+    Point setY(int a)
+    {
+        cout << "Calling setY "<<this << endl;
+        y = a;
+        return *this;
+    }
+    void print()
+    {
+        cout <<this<< " "<<x << " " << y << endl;
+    }
+    ~Point() {
+        cout << "Destrutor of " << x << " " << y << endl;
+    }
+};
+int main()
+{
+    system("CLS");
+    Point p1(0, 0);
+    cout << &p1 << endl;
+    p1.setX(2).setY(3).print();
+    p1.print();
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 1Jul 1
+#include <iostream>
+using namespace std;
+class Point {
+    int x;
+    int y;
+public:
+    Point(int x, int y)
+    {
+        cout << "const called" << endl;
+        this->x = x;
+        this->y = y;
+    }
+    void setX(int a)
+    {
+        cout << "Calling setX" << endl;
+        this->x = a;
+    }
+    void setY(int a)
+    {
+        cout << "Calling setY" << endl;
+        y = a;
+    }
+    void print()
+    {
+        cout << x << " " << y << endl;
+    }
+    ~Point() {
+        cout << "Destrutor of " << x << " " << y << endl;
+    }
+};
+int main()
+{
+    system("CLS");
+    Point p1(0, 0);
+    p1.setX(2);
+    p1.setY(3);
+    p1.print();
+   
+}
+
+#include <iostream>
+using namespace std;
+class Point {
+    int x;
+    int y;
+public:
+    Point(int x, int y)
+    {
+        cout << "const called" << endl;
+        this->x = x;
+        this->y = y;
+    }
+    void print()
+    {
+        cout << " " << x << " " << y << endl;
+    }
+    ~Point() {
+        cout << "Destrutor of " << x << " " << y << endl;
+    }
+    bool operator==(Point &p2)
+    {
+        return this->x == p2.x && this->y == p2.y;
+    }
+    bool operator!=(Point& p2)
+    {
+        return !(*this == p2);
+    }
+};
+
+int main()
+{
+    system("CLS");
+    Point p1(1, 1),p2(1,1);
+    (p1 != p2) ? cout << "not same" : cout << "same";
+    cout << endl;
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 6Jul 6
+#include <iostream>
+using namespace std;
+class Point {
+    int x;
+    int y;
+public:
+    Point(int x, int y)
+    {
+        cout << "const called" << endl;
+        this->x = x;
+        this->y = y;
+    }
+    void print()
+    {
+        cout << " " << x << " " << y << endl;
+    }
+    ~Point() {
+        cout << "Destrutor of " << x << " " << y << endl;
+    }
+    bool operator==(Point p2)
+    {
+        return this->x == p2.x && this->y == p2.y;
+    }
+};
+
+int main()
+{
+    system("CLS");
+    Point p1(1, 1),p2(2,2);
+    (p1 == p2) ? cout << "same" : cout << "not same";
+    cout << endl;
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 6Jul 6
+#include <iostream>
+using namespace std;
+class Point {
+    int x;
+    int y;
+public:
+    Point(int x, int y)
+    {
+        cout << "const called" << endl;
+        this->x = x;
+        this->y = y;
+    }
+    Point& operator+(int n)
+    {
+        cout << "Calling + op" << endl;
+        static Point temp(0, 0);
+        temp.x = this->x + n;
+        temp.y = this->y + n;
+        return temp;
+    }
+    void print()
+    {
+        cout << " " << x << " " << y << endl;
+    }
+    ~Point() {
+        cout << "Destrutor of " << x << " " << y << endl;
+    }
+};
+Point& operator+(int n, Point& p1)//non member
+{
+    return p1.operator+(n);
+}
+int main()
+{
+    system("CLS");
+    Point p1(1, 1);
+    Point p2 = operator+(10,p1);
+    p2.print();
+   
+
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 6Jul 6
+#include <iostream>
+using namespace std;
+class Point {
+    int x;
+    int y;
+public:
+    Point(int x, int y)
+    {
+        cout << "const called" << endl;
+        this->x = x;
+        this->y = y;
+    }
+    Point& operator+(int n)
+    {
+        cout << "Calling + op" << endl;
+        static Point temp(0, 0);
+        temp.x = this->x + n;
+        temp.y = this->y + n;
+        return temp;
+    }
+    void print()
+    {
+        cout << " " << x << " " << y << endl;
+    }
+    ~Point() {
+        cout << "Destrutor of " << x << " " << y << endl;
+    }
+};
+Point& operator+(int n, Point& p1)//non member
+{
+    return p1+n;
+}
+int main()
+{
+    system("CLS");
+    Point p1(1, 1);
+    Point p2 = 10+p1;
+    p2.print();
+   
+
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 6Jul 6
+#include <iostream>
+using namespace std;
+class Point {
+    int x;
+    int y;
+public:
+    Point(int x, int y)
+    {
+        cout << "const called" << endl;
+        this->x = x;
+        this->y = y;
+    }
+    void print()
+    {
+        cout << " " << x << " " << y << endl;
+    }
+    ~Point() {
+        cout << "Destrutor of " << x << " " << y << endl;
+    }
+    friend Point& operator+(int n, Point& p1);
+};
+Point& operator+(int n, Point& p1)//non member
+{
+    cout << "Calling + op" << endl;
+    static Point temp(0, 0);
+    temp.x = p1.x + n;
+    temp.y = p1.y + n;
+    return temp;
+}
+int main()
+{
+    system("CLS");
+    Point p1(1, 1);
+    Point p2 = 10+p1;
+    p2.print();
+   
+
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 6Jul 6
+#include <iostream>
+using namespace std;
+class Point {
+    int x;
+    int y;
+public:
+    Point(int x, int y)
+    {
+        cout << "const called" << endl;
+        this->x = x;
+        this->y = y;
+    }
+    void print()
+    {
+        cout << " " << x << " " << y << endl;
+    }
+    ~Point() {
+        cout << "Destrutor of " << x << " " << y << endl;
+    }
+    friend Point& operator+(Point& p1, int n);
+};
+Point& operator+(Point &p1,int n)//non member
+{
+    cout << "Calling + op" << endl;
+    static Point temp(0, 0);
+    temp.x = p1.x + n;
+    temp.y = p1.y + n;
+    return temp;
+}
+int main()
+{
+    system("CLS");
+    Point p1(1, 1);
+    Point p2 = p1 + 10;
+    p2.print();
+   
+
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 6Jul 6
+#include <iostream>
+using namespace std;
+class Point {
+    int x;
+    int y;
+public:
+    Point(int x, int y)
+    {
+        cout << "const called" << endl;
+        this->x = x;
+        this->y = y;
+    }
+    void print()
+    {
+        cout << " " << x << " " << y << endl;
+    }
+    ~Point() {
+        cout << "Destrutor of " << x << " " << y << endl;
+    }
+    Point& operator+(int n)
+    {
+        cout << "Calling + op" << endl;
+        static Point temp(0, 0);
+        temp.x = this->x +n;
+        temp.y = this->y + n;
+        return temp;
+    }
+};
+int main()
+{
+    system("CLS");
+    Point p1(1, 1);
+    Point p2 = p1.operator+(10);
+    p2.print();
+   
+
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 6Jul 6
+#include <iostream>
+using namespace std;
+class Point {
+    int x;
+    int y;
+public:
+    Point(int x, int y)
+    {
+        cout << "const called" << endl;
+        this->x = x;
+        this->y = y;
+    }
+    void print()
+    {
+        cout << " " << x << " " << y << endl;
+    }
+    ~Point() {
+        cout << "Destrutor of " << x << " " << y << endl;
+    }
+    Point& operator+(int n)
+    {
+        cout << "Calling + op" << endl;
+        static Point temp(0, 0);
+        temp.x = this->x +n;
+        temp.y = this->y + n;
+        return temp;
+    }
+};
+int main()
+{
+    system("CLS");
+    Point p1(1, 1);
+    Point p2 = p1 + 10;
+    p2.print();
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 6Jul 6
+#include <iostream>
+using namespace std;
+class Point {
+    int x;
+    int y;
+public:
+    Point(int x, int y)
+    {
+        cout << "const called" << endl;
+        this->x = x;
+        this->y = y;
+    }
+    void print()
+    {
+        cout << " " << x << " " << y << endl;
+    }
+    ~Point() {
+        cout << "Destrutor of " << x << " " << y << endl;
+    }
+    Point& operator+(const Point& p2)
+    {
+        cout << "Calling + op" << endl;
+        static Point temp(0, 0);
+        temp.x = this->x + p2.x;
+        temp.y = this->y + p2.y;
+        return temp;
+    }
+};
+int main()
+{
+    system("CLS");
+    Point p1(1, 1),p2(2,2),p4(3,3);
+    Point p3 = p1 + p2 + p4;
+    Point p5 = p1 + p2;
+    p5.print();
+    p3.print();
+
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 6Jul 6
+#include <iostream>
+using namespace std;
+class Point {
+    int x;
+    int y;
+public:
+    Point(int x, int y)
+    {
+        cout << "const called" << endl;
+        this->x = x;
+        this->y = y;
+    }
+    void print()
+    {
+        cout << " " << x << " " << y << endl;
+    }
+    ~Point() {
+        cout << "Destrutor of " << x << " " << y << endl;
+    }
+    Point& operator+(const Point& p2)
+    {
+        Point temp(0, 0);
+        temp.x = this->x + p2.x;
+        temp.y = this->y + p2.y;
+        return temp;
+    }
+};
+int main()
+{
+    system("CLS");
+    Point p1(1, 1),p2(2,2);
+    Point p3 = p1 + p2;
+    p3.print();
+
+   
+}
+
+//Dry Run This
+
+#include<iostream>
+using namespace std;
+class Address {
+private:
+    int house;
+    string area;
+    string city;
+    Address(int h, string a, string c) :house(h), area(a), city(c) {
+        cout << "Creating address";
+        print();
+    }
+    void print()
+    {
+        cout << "House number = " << house << " Area =" << area << " city= " << city << endl;
+    }
+    ~Address()
+    {
+        cout << "Destroying";
+        print();
+    }
+    friend class Person;
+};
+class DOB {
+private:
+    int day;
+    int mon;
+    int year;
+    DOB(int h, int a, int c) :day(h), mon(a), year(c) {
+        cout << "Creating DOB";
+        print();
+    }
+    void print()
+    {
+        cout << "DOB:" << day << "/" << mon << "/" << year << endl;
+    }
+    ~DOB()
+    {
+        cout << "Destroying";
+        print();
+    }
+    friend class Person;
+};
+class Person {
+public:
+    int cnic;
+    string name;
+    DOB dob;
+    Address add;
+    Person(int c, string n, int h,string ar,string ci,int d,int mo,int yr) :cnic(c), name(n),  add(h, ar, ci), dob(d, mo, yr) {
+        cout << "Creating person " << name << endl;
+    }
+    void print()
+    {
+        cout << "Cnic: " << cnic << "Name: " << name << endl;
+        dob.print();
+        add.print();
+    }
+    ~Person() {
+        cout << "Destroying person " << name << endl;
+    }
+};
+int main() {
+   
+    Person p1(23425, "Ali",12,"AIT","LHR",12,03,1995);
+    p1.print();
+ 
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 8Jul 8
+#include<iostream>
+using namespace std;
+class Address {
+public:
+    int house;
+    string area;
+    string city;
+    Address(int h, string a, string c) :house(h), area(a), city(c) {
+        cout << "Creating address";
+        print();
+    }
+    void print()
+    {
+        cout << "House number = " << house << " Area =" << area << " city= " << city << endl;
+    }
+    ~Address()
+    {
+        cout << "Destroying";
+        print();
+    }
+};
+class DOB {
+public:
+    int day;
+    int mon;
+    int year;
+    DOB(int h, int a, int c) :day(h), mon(a), year(c) {
+        cout << "Creating DOB";
+        print();
+    }
+    void print()
+    {
+        cout << "DOB:" << day << "/" << mon << "/" << year << endl;
+    }
+    ~DOB()
+    {
+        cout << "Destroying";
+        print();
+    }
+};
+class Person {
+public:
+    int cnic;
+    string name;
+    DOB dob;
+    Address add;
+    Person(int c, string n, Address &a,DOB &dob) :cnic(c), name(n),  add(a.house, a.area, a.city), dob(dob.day, dob.mon, dob.year) {
+        cout << "Creating person " << name << endl;
+    }
+    void changeAddress(Address &a)
+    {
+        add = a;
+    }
+    void print()
+    {
+        cout << "Cnic: " << cnic << "Name: " << name << endl;
+        dob.print();
+        add.print();
+    }
+    ~Person() {
+        cout << "Destroying person " << name << endl;
+    }
+};
+int main() {
+    Address a1(23, "AIT", "Lahore");
+    Address a2(45, "DHA", "ISB");
+    DOB d1(12, 03, 1995);
+    Person p1(23425, "Ali", a1,d1);
+    p1.print();
+    p1.changeAddress(a2);
+    p1.print();
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 8Jul 8
+DRY RUN This 
+
+
+#include<iostream>
+using namespace std;
+class Address {
+public:
+    int house;
+    string area;
+    string city;
+    Address(int h, string a, string c) :house(h), area(a), city(c) {
+        cout << "Creating address";
+        print();
+    }
+    void print()
+    {
+        cout << "House number = " << house << " Area =" << area << " city= " << city << endl;
+    }
+    ~Address()
+    {
+        cout << "Destroying";
+        print();
+    }
+};
+class DOB {
+public:
+    int day;
+    int mon;
+    int year;
+    DOB(int h, int a, int c) :day(h), mon(a), year(c) {
+        cout << "Creating DOB";
+        print();
+    }
+    void print()
+    {
+        cout << "DOB:" << day << "/" << mon << "/" << year << endl;
+    }
+    ~DOB()
+    {
+        cout << "Destroying";
+        print();
+    }
+};
+class Person {
+public:
+    int cnic;
+    string name;
+    DOB dob;
+    Address add;
+    Person(int c, string n, Address &a,DOB &dob) :cnic(c), name(n), dob(dob.day,dob.mon,dob.year), add(a.house, a.area, a.city) {
+        cout << "Creating person " << name << endl;
+    }
+    void changeAddress(Address &a)
+    {
+        add = a;
+    }
+    void print()
+    {
+        cout << "Cnic: " << cnic << "Name: " << name << endl;
+        dob.print();
+        add.print();
+    }
+    ~Person() {
+        cout << "Destroying person " << name << endl;
+    }
+};
+int main() {
+    Address a1(23, "AIT", "Lahore");
+    Address a2(45, "DHA", "ISB");
+    DOB d1(12, 03, 1995);
+    Person p1(23425, "Ali", a1,d1);
+    p1.print();
+    p1.changeAddress(a2);
+    p1.print();
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 8Jul 8
+//composition#include<iostream>
+using namespace std;
+class Address {
+public:
+    int house;
+    string area;
+    string city;
+    Address(int h, string a, string c) :house(h), area(a), city(c) {
+        cout << "Creating address";
+        print();
+    }
+    void print()
+    {
+        cout << "House number = " << house << " Area =" << area << " city= " << city << endl;
+    }
+    ~Address()
+    {
+        cout << "Destroying";
+        print();
+    }
+};
+class Person {
+public:
+    int cnic;
+    string name;
+    Address add;
+    Person(int c, string n, Address &a) :cnic(c), name(n), add(a.house,a.area,a.city) {
+        cout << "Creating person " << name << endl;
+    }
+    void changeAddress(Address &a)
+    {
+        add = a;
+    }
+    void print()
+    {
+        cout << "Cnic: " << cnic << "Name: " << name << endl;
+        add.print();
+    }
+    ~Person() {
+        cout << "Destroying person " << name << endl;
+    }
+};
+int main() {
+    Address a1(23, "AIT", "Lahore");
+    Address a2(45, "DHA", "ISB");
+    Person p1(23425, "Ali", a1);
+    p1.print();
+    p1.changeAddress(a2);
+    p1.print();
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 8Jul 8
+//copy constructor#include<iostream>
+using namespace std;
+class Address {
+public:
+    int house;
+    string area;
+    string city;
+    Address(int h, string a, string c) :house(h), area(a), city(c) {
+        cout << "Creating address";
+        print();
+    }
+    void print()
+    {
+        cout << "House number = " << house << " Area =" << area << " city= " << city << endl;
+    }
+    ~Address()
+    {
+        cout << "Destroying";
+        print();
+    }
+};
+class Person {
+public:
+    int cnic;
+    string name;
+    Address add;
+    Person(int c, string n, Address a) :cnic(c), name(n), add(a.house,a.area,a.city) {
+        cout << "Creating person " << name << endl;
+    }
+    void changeAddress(Address a)
+    {
+        add = a;
+    }
+    void print()
+    {
+        cout << "Cnic: " << cnic << "Name: " << name << endl;
+        add.print();
+    }
+    ~Person() {
+        cout << "Destroying person " << name << endl;
+    }
+};
+int main() {
+    Address a1(23, "AIT", "Lahore");
+    Address a2(45, "DHA", "ISB");
+    Person p1(23425, "Ali", a1);
+    p1.print();
+    p1.changeAddress(a2);
+    p1.print();
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 8Jul 8
+//aggregation + association
+
+#include<iostream>
+using namespace std;
+class Address {
+public:
+    int house;
+    string area;
+    string city;
+    Address(int h, string a, string c) :house(h), area(a), city(c) {
+        cout << "Creating address";
+        print();
+    }
+    void print()
+    {
+        cout << "House number = " << house << " Area =" << area << " city= " << city << endl;
+    }
+    ~Address()
+    {
+        cout << "Destroying";
+        print();
+    }
+};
+class Person {
+public:
+    int cnic;
+    string name;
+    Address* add;
+    Person(int c, string n, Address *a) :cnic(c), name(n), add(a) {
+        cout << "Creating person " << name << endl;
+    }
+    void changeAddress(Address* a)
+    {
+        add = a;
+    }
+    void print()
+    {
+        cout << "Cnic: " << cnic << "Name: " << name << endl;
+        add->print();
+    }
+    ~Person() {
+        cout << "Destroying person " << name << endl;
+    }
+};
+int main() {
+    Address a1(23, "AIT", "Lahore");
+    Address a2(45, "DHA", "ISB");
+    Person p1(23425, "Ali", &a1);
+    p1.print();
+    p1.changeAddress(&a2);
+    p1.print();
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 8Jul 8
+//Dependency
+#include<iostream>
+using namespace std;
+class Student {
+public:
+    int roll;
+    string name;
+    Student(int roll, string name) :roll(roll), name(name) {
+
+    }
+    void print()
+    {
+        cout << "Roll number " << roll << " Name " << name << endl;
+    }
+
+};
+class Teacher {
+public:
+    int id;
+    void PrintStudent(Student* s)//dependency
+    {
+        s->print();
+    }
+
+};
+int main() {
+    Student s(12, "Ali");
+    Teacher t;
+    t.PrintStudent(&s);
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 6Jul 6
+#include <iostream>
+using namespace std;
+class Myarray {
+public:
+    int* arr;
+    int size;
+    Myarray(int s)
+    {
+        size = s;
+        arr = new int[size];
+    }
+    ~Myarray() {
+        delete[] arr;
+    }
+    int& operator[](int index)
+    {
+        return (this->arr[index]);
+    }
+};
+int main()
+{
+    Myarray obj(5);
+    obj[0] = 4;
+    cout << obj[0];
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 6Jul 6
+Quiz 2 in next class (Wednesday)
+
+syllabus: from Classes to operator overloading
+Dry Run
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 6Jul 6
+#include <iostream>
+using namespace std;
+class Myarray {
+public:
+    int* arr;
+    int size;
+    Myarray(int s)
+    {
+        size = s;
+        arr = new int[size];
+    }
+    ~Myarray() {
+        delete[] arr;
+    }
+};
+int main()
+{
+    Myarray obj(5);
+    obj.arr[0] = 4;
+    cout << obj.arr[0];
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 6Jul 6
+#include <iostream>
+using namespace std;
+int global = 10;
+int* fun()
+{
+    return &global;
+}
+int main()
+{
+    *fun() = 12;
+    cout << global<< endl;
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 6Jul 6
+#include <iostream>
+using namespace std;
+int global = 10;
+int& fun()
+{
+    return global;
+}
+int main()
+{
+    fun() = 12;
+    cout << global<< endl;
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 6Jul 6
+#include <iostream>
+using namespace std;
+class Point {
+    int x;
+    int y;
+public:
+    Point(int x, int y)
+    {
+        cout << "const called" << endl;
+        this->x = x;
+        this->y = y;
+    }
+    void print()
+    {
+        cout << " " << x << " " << y << endl;
+    }
+    ~Point() {
+        cout << "Destrutor of " << x << " " << y << endl;
+    }
+    friend ostream& operator<<(ostream &o, Point& p);
+    friend istream& operator>>(istream& i, Point& p);
+};
+ostream& operator<<(ostream &o, Point& p)
+{
+    o << p.x << " " << p.y << endl;
+    return o;
+}
+istream& operator>>(istream& i, Point& p)
+{
+    cout << "Enter x and y" << endl;
+    i >> p.x >> p.y;
+    return i;
+}
+int main()
+{
+    system("CLS");
+    Point p1(1, 1), p2(2, 2);
+    cin >> p1 >> p2;
+    cout << p1 << p2;
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 6Jul 6
+#include <iostream>
+using namespace std;
+class Point {
+    int x;
+    int y;
+public:
+    Point(int x, int y)
+    {
+        cout << "const called" << endl;
+        this->x = x;
+        this->y = y;
+    }
+    void print()
+    {
+        cout << " " << x << " " << y << endl;
+    }
+    ~Point() {
+        cout << "Destrutor of " << x << " " << y << endl;
+    }
+    friend void operator<<(ostream& o, Point& p);
+};
+void operator<<(ostream& o, Point& p)
+{
+    o << p.x << " " << p.y << endl;
+}
+int main()
+{
+    system("CLS");
+    Point p1(1, 1), p2(2, 2);
+    cout << p1;
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 6Jul 6
+#include <iostream>
+using namespace std;
+class Point {
+public:
+    int *x;
+    int y;
+
+    Point(int x, int y)
+    {
+        cout << "const called" << endl;
+        this->x = new int(x);
+        this->y = y;
+    }
+    void print()
+    {
+        if(x!=nullptr)
+            cout << " "<<*x << " " << y << endl;
+        else
+            cout  << y << endl;
+    }
+    Point& operator=(Point& p1)
+    {
+        cout << "my == deep copy operator" << endl;
+        if (this != &p1)
+        {
+            this->y = p1.y;
+            if (this->x == nullptr && p1.x != nullptr)
+            {
+                cout << "this->x = new int(*(p1.x))" << endl;
+                this->x = new int(*(p1.x));
+            }
+            else if (this->x != nullptr && p1.x == nullptr)
+            {
+                cout << "delete this->x; this->x = nullptr; " << endl;
+                delete this->x;
+                this->x = nullptr;
+            }
+            else if (this->x != nullptr && p1.x != nullptr)
+            {
+                cout << "*(this->x) = *(p1.x);" << endl;
+                *(this->x) = *(p1.x);
+            }
+        }
+        return *this;
+    }
+    ~Point() {
+        cout << "Destrutor of " << *x << " " << y << endl;
+        if(x!=nullptr)
+            delete x;
+    }
+};
+
+int main()
+{
+    system("CLS");
+    Point p1(1, 1),p2(2,2);
+    p2 = p1;
+    p2.print();
+
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 6Jul 6
+#include <iostream>
+using namespace std;
+class Point {
+    int x;
+    int y;
+public:
+    Point(int x, int y)
+    {
+        cout << "const called" << endl;
+        this->x = x;
+        this->y = y;
+    }
+    void print()
+    {
+        cout << " " << x << " " << y << endl;
+    }
+    ~Point() {
+        cout << "Destrutor of " << x << " " << y << endl;
+    }
+    void operator=(Point& p1)
+    {
+        cout << "My = op" << endl;
+        this->x = p1.x;
+        this->y = p1.y;
+    }
+};
+int main()
+{
+    system("CLS");
+    Point p1(1, 1);
+    Point p2(2, 2);
+    p2 = p1;
+    p2.print();
+}
+
+#include<iostream>
+using namespace std;
+class A {
+    int a;//private
+protected:
+    int b;
+public:
+    int c;
+    void print() {
+        cout << a << b << c << endl;
+    }
+};
+class B:private A{
+    int d;
+protected:
+    int e;
+public:
+    int f;
+    void print()
+    {
+        A::print();
+        cout << a << b << c << endl;
+        cout << d << e << f << endl;
+    }
+};
+class C :public B {
+    int g;
+protected:
+    int h;
+public:
+    int i;
+    void print()
+    {
+        cout << a << b << c << endl;
+        cout << d << e << f << endl;
+        cout << g << h << i << endl;
+    }
+};
+
+int main() {
+    B obj;
+    obj.
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 10Jul 10
+#include<iostream>
+using namespace std;
+class Student {
+protected:
+    int rollno;
+public:
+    string name;
+    Student(int rollno,string name):rollno(rollno),name(name)
+    {
+        cout << "Created student " << endl;
+    }
+    void print()
+    {
+        cout << rollno << " " << name << endl;
+    }
+    ~Student()
+    {
+        cout << "destroyed student " << endl;
+    }
+};
+class Undergraduate:public Student {
+public:
+    int fypid;
+    string fyptitle;
+    Undergraduate(int fypid, string title) :fypid(fypid), fyptitle(title),Student(12,"Ali") {
+        cout << "Created Undergraduate student " << endl;
+    }
+    void print()
+    {
+        cout << rollno << " " << name << endl;
+        cout << fypid << " " << fyptitle << endl;
+    }
+    ~Undergraduate()
+    {
+        cout << "destroyed Undergraduate " << endl;
+    }
+};
+int main() {
+    Student s1(12, "Ahmad");
+    s1.print();
+    Undergraduate s2(234, "Deep learning");
+    s2.Student::print();
+    s2.print();
+    s2.rollno = 34;//its protected means only accessible within child class
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 10Jul 10
+#include<iostream>
+using namespace std;
+class Student {
+protected:
+    int rollno;
+public:
+    string name;
+    Student(int rollno,string name):rollno(rollno),name(name)
+    {
+        cout << "Created student " << endl;
+    }
+    void print()
+    {
+        cout << rollno << " " << name << endl;
+    }
+    ~Student()
+    {
+        cout << "destroyed student " << endl;
+    }
+};
+class Undergraduate:public Student {
+public:
+    int fypid;
+    string fyptitle;
+    Undergraduate(int fypid, string title) :fypid(fypid), fyptitle(title),Student(12,"Ali") {
+        cout << "Created Undergraduate student " << endl;
+    }
+    void print()
+    {
+        cout << rollno << " " << name << endl;
+        cout << fypid << " " << fyptitle << endl;
+    }
+    ~Undergraduate()
+    {
+        cout << "destroyed Undergraduate " << endl;
+    }
+};
+int main() {
+    Student s1(12, "Ahmad");
+    s1.print();
+    Undergraduate s2(234, "Deep learning");
+    s2.Student::print();
+    s2.print();
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 10Jul 10
+#include<iostream>
+using namespace std;
+class Student {
+    int rollno;
+public:
+    string name;
+    Student(int rollno,string name):rollno(rollno),name(name)
+    {
+        cout << "Created student " << endl;
+    }
+    void print()
+    {
+        cout << rollno << " " << name << endl;
+    }
+    ~Student()
+    {
+        cout << "destroyed student " << endl;
+    }
+};
+class Undergraduate:public Student {
+public:
+    int fypid;
+    string fyptitle;
+    Undergraduate(int fypid, string title) :fypid(fypid), fyptitle(title),Student(12,"Ali") {
+        cout << "Created Undergraduate student " << endl;
+    }
+    void print()
+    {
+        cout << rollno << " " << name << endl;
+        cout << fypid << " " << fyptitle << endl;
+    }
+    ~Undergraduate()
+    {
+        cout << "destroyed Undergraduate " << endl;
+    }
+};
+int main() {
+    Student s1(12, "Ahmad");
+    s1.print();
+    Undergraduate s2(234, "Deep learning");
+    s2.Student::print();
+    s2.print();
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 10Jul 10
+//Started Inheritance
+
+#include<iostream>
+using namespace std;
+class Student {
+public:
+    int rollno;
+    string name;
+    Student(int rollno,string name):rollno(rollno),name(name)
+    {
+        cout << "Created student " << endl;
+    }
+    void print()
+    {
+        cout << rollno << " " << name << endl;
+    }
+    ~Student()
+    {
+        cout << "destroyed student " << endl;
+    }
+};
+class Undergraduate:public Student {
+public:
+    int fypid;
+    string fyptitle;
+    Undergraduate(int fypid, string title) :fypid(fypid), fyptitle(title),Student(12,"Ali") {
+        cout << "Created Undergraduate student " << endl;
+    }
+    void print()
+    {
+        Student::print();
+        cout << fypid << " " << fyptitle << endl;
+    }
+    ~Undergraduate()
+    {
+        cout << "destroyed Undergraduate " << endl;
+    }
+};
+int main() {
+    Student s1(12, "Ahmad");
+    s1.print();
+    Undergraduate s2(234, "Deep learning");
+    s2.Student::print();
+    s2.print();
+}
+
+#include<iostream>
+using namespace std;
+class A {
+public:
+    int a;
+    A(int a):a(a) { cout << "A created" << endl; }
+    ~A() { cout << "A destroyed" << endl; }
+    void print()
+    {
+        cout << "printing A" << endl;
+    }
+};
+class B {
+public:
+    int b;
+    B(int b):b(b) { cout << "B created" << endl; }
+    ~B() { cout << "B destroyed" << endl; }
+    void print()
+    {
+        cout << "printing B" << endl;
+    }
+};
+class C : public B, public A {
+public:
+    int c;
+    C(int a,int b,int c):c(c),A(b),B(a) { cout << "C created" << endl; }
+    ~C() { cout << "C destroyed" << endl; }
+};
+int main() {
+    C obj(1,2,3);
+    obj.A::print();
+    obj.B::print();
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 10Jul 10
+#include<iostream>
+using namespace std;
+class A {
+public:
+    int a;
+    A(int a):a(a) { cout << "A created" << endl; }
+    ~A() { cout << "A destroyed" << endl; }
+    void print()
+    {
+        cout << "printing" << endl;
+    }
+};
+class B {
+public:
+    int b;
+    B(int b):b(b) { cout << "B created" << endl; }
+    ~B() { cout << "B destroyed" << endl; }
+    void print()
+    {
+        cout << "printing" << endl;
+    }
+};
+class C : public B, public A {
+public:
+    int c;
+    C(int a,int b,int c):c(c),A(b),B(a) { cout << "C created" << endl; }
+    ~C() { cout << "C destroyed" << endl; }
+    void print()
+    {
+        cout << "printing" << endl;
+    }
+};
+int main() {
+    C obj(1,2,3);
+    obj.print();//print of C will be called
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 10Jul 10
+#include<iostream>
+using namespace std;
+class A {
+public:
+    int a;
+    A(int a):a(a) { cout << "A created" << endl; }
+    ~A() { cout << "A destroyed" << endl; }
+    void print()
+    {
+        cout << "printing" << endl;
+    }
+};
+class B {
+public:
+    int b;
+    B(int b):b(b) { cout << "B created" << endl; }
+    ~B() { cout << "B destroyed" << endl; }
+    void print()
+    {
+        cout << "printing" << endl;
+    }
+};
+class C : public B, public A {
+public:
+    int c;
+    C(int a,int b,int c):c(c),A(b),B(a) { cout << "C created" << endl; }
+    ~C() { cout << "C destroyed" << endl; }
+};
+int main() {
+    C obj(1,2,3);
+    obj.print();//ambiguous
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 10Jul 10
+#include<iostream>
+using namespace std;
+class A {
+public:
+    int a;
+    A(int a):a(a) { cout << "A created" << endl; }
+    ~A() { cout << "A destroyed" << endl; }
+};
+class B {
+public:
+    int b;
+    B(int b):b(b) { cout << "B created" << endl; }
+    ~B() { cout << "B destroyed" << endl; }
+};
+class C : public B, public A {
+public:
+    int c;
+    C(int a,int b,int c):c(c),A(b),B(a) { cout << "C created" << endl; }
+    ~C() { cout << "C destroyed" << endl; }
+};
+int main() {
+    C obj(1,2,3);
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 10Jul 10
+#include<iostream>
+using namespace std;
+class A {
+public:
+    A() { cout << "A created" << endl; }
+    ~A() { cout << "A destroyed" << endl; }
+};
+class B {
+public:
+    B() { cout << "B created" << endl; }
+    ~B() { cout << "B destroyed" << endl; }
+};
+class C : public B, public A {
+public:
+    C() { cout << "C created" << endl; }
+    ~C() { cout << "C destroyed" << endl; }
+};
+int main() {
+    C obj;
+}
+
+#include <iostream>
+using namespace std;
+class A {
+public:
+    int a;
+    A(int a) :a(a) { cout << "para of A" << endl; }
+    A(A& obj) :a(obj.a) { cout << "Copy const of A" << endl; }
+    void print() { cout << "Print of A" << endl; }
+};
+class B :public A{
+public:
+    int b;
+    B(int a, int b):A(a),b(b) { cout << "para of B" << endl; }
+    B(B &obj):A(obj.a),b(obj.b){ cout << "Copy const of B" << endl; }
+    void print(){ cout << "Print of B" << endl; }
+};
+class C :public B {
+public:
+    int c;
+    C(int a,int b,int c):B(a,b),c(c){ cout << "para of C" << endl; }
+    C(C& obj) :B(obj),c(obj.c) { cout << "Copy const of C" << endl; }
+    void print() { cout << "Print of C" << endl; }
+};
+int main()
+{
+    A obja(2);
+    B objb(3, 4);
+    C objc(5, 6, 7);
+    C objc2 = objc;
+    obja.print();
+    objb.print();
+    objc.A::print();
+    cout << objc2.a << " " << objc2.b << " " << objc2.c << endl;
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 13Jul 13
+#include <iostream>
+using namespace std;
+class A {
+public:
+    int a;
+    A(int a) :a(a) { cout << "para of A" << endl; }
+    A(A& obj) :a(obj.a) { cout << "Copy const of A" << endl; }
+    void print() { cout << "Print of A" << endl; }
+};
+class B :public A{
+public:
+    int b;
+    B(int a, int b):A(a),b(b) { cout << "para of B" << endl; }
+    B(B &obj):A(obj.a),b(obj.b){ cout << "Copy const of B" << endl; }
+    void print(){ cout << "Print of B" << endl; }
+};
+class C :public B {
+public:
+    int c;
+    C(int a,int b,int c):B(a,b),c(c){ cout << "para of C" << endl; }
+    C(C& obj) :B(obj),c(obj.c) { cout << "Copy const of C" << endl; }
+    void print() { cout << "Print of C" << endl; }
+};
+int main()
+{
+    A obja(2);
+    B objb(3, 4);
+    C objc(5, 6, 7);
+    C objc2 = objc;
+    cout << objc2.a << " " << objc2.b << " " << objc2.c << endl;
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 13Jul 13
+#include <iostream>
+using namespace std;
+class A {
+public:
+    int a;
+    A(int a) :a(a) { cout << "para of A" << endl; }
+    A(A& obj) :a(obj.a) { cout << "Copy const of A" << endl; }
+    void print() { cout << "Print of A" << endl; }
+};
+class B :public A{
+public:
+    int b;
+    B(int a, int b):A(a),b(b) { cout << "para of B" << endl; }
+    B(B &obj):A(obj),b(obj.b){ cout << "Copy const of B" << endl; }
+    void print(){ cout << "Print of B" << endl; }
+};
+class C :public B {
+public:
+    int c;
+    C(int a,int b,int c):B(a,b),c(c){ cout << "para of C" << endl; }
+    C(C& obj) :B(obj),c(obj.c) { cout << "Copy const of C" << endl; }
+    void print() { cout << "Print of C" << endl; }
+};
+int main()
+{
+    A obja(2);
+    B objb(3, 4);
+    C objc(5, 6, 7);
+    C objc2 = objc;
+    cout << objc2.a << " " << objc2.b << " " << objc2.c << endl;
+   
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 13Jul 13
+#include <iostream>
+using namespace std;
+class A {
+public:
+    int a;
+    A(int a):a(a){}
+    void print() { cout << "Print of A" << endl; }
+};
+class B :public A{
+public:
+    int b;
+    B(int a, int b):A(a),b(b) {    }
+    void print(){ cout << "Print of B" << endl; }
+};
+class C :public B {
+public:
+    int c;
+    C(int a,int b,int c):B(a,b),c(c){}
+    void print() { cout << "Print of C" << endl; }
+};
+int main()
+{
+    A obja(2);
+    B objb(3, 4);
+    C objc(5, 6, 7);
+    obja = objb;
+    cout << obja.a<< endl;
+    A& ref = objc;
+    cout << ref.a << endl;
+    ref.print();
+    A* ptr = &objb;
+    ptr->print();
+    cout << ptr->a << endl;
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 13Jul 13
+#include <iostream>
+using namespace std;
+class A {
+public:
+    int a;
+    A(int a):a(a){}
+};
+class B :public A{
+public:
+    int b;
+    B(int a, int b):A(a),b(b) {
+
+    }
+    void print()
+    {
+        cout << a << " " << b << endl;
+    }
+};
+int main()
+{
+    B objb(2, 3);
+    objb.print();
+
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 13Jul 13
+#include <iostream>
+using namespace std;
+class A {
+public:
+    int a;
+    A(int a):a(a){}
+};
+class B {
+public:
+    A obj;
+    int b;
+    B(int a, int b):obj(a),b(b) {
+
+    }
+    void print()
+    {
+        cout << obj.a << " " << b << endl;
+    }
+};
+int main()
+{
+    B objb(2, 3);
+    objb.print();
+
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 13Jul 13
+#include <iostream>
+using namespace std;
+class Point {
+public:
+    const int c;
+    int x;
+    int y;
+    Point(int x, int y) :x(x),y(y),c(34) {//to avoid this
+
+    }
+    void print()
+    {
+        cout << x << " " << y<<" "<<c << endl;
+    }
+};
+int main()
+{
+    Point a(2, 3);
+    a.print();
+
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 13Jul 13
+#include <iostream>
+using namespace std;
+class Point {
+public:
+    const int c;
+    int x;
+    int y;
+    Point(int i, int j) :x(i),y(j),c(34) {//to initialize const data members
+
+    }
+    void print()
+    {
+        cout << x << " " << y<<" "<<c << endl;
+    }
+};
+int main()
+{
+    Point a(2, 3);
+    a.print();
+
+}
+
+Post by Anosha Khan
+Anosha Khan
+Created Jul 13Jul 13
+#include <iostream>
+using namespace std;
+class Point {
+public:
+    int x;
+    int y;
+    Point(int i, int j) :x(i), y(j) {//to initialize data members
+
+    }
+    void print()
+    {
+        cout << x << " " << y << endl;
+    }
+};
+int main()
+{
+    Point a(2, 3);
+    a.print();
+}
